@@ -4,8 +4,8 @@
 {% extends "base.html" %}
 {% from "phone/partials/charts.html" import kpi_tiles, bar_rows, flow_bars, month_tiles %}
 {% from "partials/charts.html" import trend, donut %}
-{% block title %}Overview{% endblock %}
-{% block heading %}<h1>{{ 'Overview'|tr(locale) }}</h1>{% endblock %}
+{% block title %}Today{% endblock %}
+{% block heading %}<h1>{{ 'Today'|tr(locale) }}</h1>{% endblock %}
 {% block content %}
 {% if period_error %}<p class="flash error">{{ period_error }}</p>{% endif %}
 {% if setup %}{% set done = setup|selectattr("done")|list|length %}

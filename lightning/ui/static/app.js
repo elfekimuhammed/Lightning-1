@@ -2052,6 +2052,13 @@ document.querySelectorAll("[data-currency-search]").forEach((search) => {
     }
     const link = event.target.closest("a[data-popup-open]");
     if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
+    // Remember the last account selected for Quick Add only in this browser session.
+    const accountId = link.dataset.quickAccount || new URL(link.href, location.href).pathname.match(/^\/accounts\/(\d+)\/transaction\/new$/)?.[1];
+    if (accountId && /^\d+$/.test(accountId)) sessionStorage.setItem("lightning.quickAddAccount", accountId);
+    if (link.hasAttribute("data-quick-add")) {
+      const remembered = sessionStorage.getItem("lightning.quickAddAccount");
+      if (remembered && /^\d+$/.test(remembered)) link.href = `/accounts/${remembered}/transaction/new`;
+    }
     event.preventDefault();
     openUrl(link.href, link).catch(() => { location.href = link.href; });
   });

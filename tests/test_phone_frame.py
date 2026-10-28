@@ -43,7 +43,7 @@ def test_every_page_renders_in_the_phone_frame(phone, path):
     assert "viewport-fit=cover" in html and "/static/phone.css" in html
     assert "/static/phone-fields.js" in html  # a tapped field opens empty, its old text back if left empty
     names = re.findall(r'class="phone-tab-name">([^<]+)<', html)
-    assert names == ["Overview", "Budget", "Add", "Transactions", "More"]  # phone overhaul 2026-10-22: words, Add in the middle
+    assert names == ["Today", "Budget", "Add", "Feed", "Hub"]  # phone overhaul 2026-10-22: words, Add in the middle
 
 
 def test_the_chosen_section_and_the_period_words(phone):
@@ -104,6 +104,8 @@ def test_accounts_add_button_asks_which_account(phone):
     assert 'href="/accounts/add-transaction"' in phone.get("/accounts").text
     pick = phone.get("/accounts/add-transaction").text
     assert "To which account?" in pick and "/accounts/1/transaction/new" in pick
+    assert 'data-quick-account="1"' in pick
+    assert 'href="/sms"' in pick and "Review bank messages and import transactions" in pick
 
 
 def test_profile_pages_on_the_phone_name_no_folders(phone):
